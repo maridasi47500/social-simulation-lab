@@ -13,7 +13,7 @@ from .db import get_db
 bp = Blueprint("socialmedia", __name__)
 
 
-@bp.route("/")
+@bp.route("/socialmedia/")
 def index():
     """Show all the socialmedias, most recent first."""
     db = get_db()
@@ -57,7 +57,7 @@ def get_socialmedia(id, check_author=True):
     return socialmedia
 
 
-@bp.route("/create", methods=("GET", "POST"))
+@bp.route("/socialmedia/create", methods=("GET", "POST"))
 @login_required
 def create():
     """Create a new socialmedia for the current user."""
@@ -83,7 +83,7 @@ def create():
     return render_template("socialmedia/create.html")
 
 
-@bp.route("/<int:id>/update", methods=("GET", "POST"))
+@bp.route("/socialmedia/<int:id>/update", methods=("GET", "POST"))
 @login_required
 def update(id):
     """Update a socialmedia if the current user is the author."""
@@ -110,7 +110,7 @@ def update(id):
     return render_template("socialmedia/update.html", socialmedia=socialmedia)
 
 
-@bp.route("/<int:id>/delete", methods=("POST",))
+@bp.route("/socialmedia/<int:id>/delete", methods=("POST",))
 @login_required
 def delete(id):
     """Delete a socialmedia.
