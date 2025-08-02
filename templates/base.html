@@ -1,5 +1,7 @@
 <!doctype html>
 <title>{% block title %}{% endblock %} - Flaskr</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='socialmedia.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='shape.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
   <h1><a href="{{ url_for('index') }}">Flaskr</a></h1>

@@ -38,14 +38,20 @@ def create_app(test_config=None):
     # apply the blueprints to the app
     from . import auth
     from . import blog
+    from . import socialmedia
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)
+    app.register_blueprint(socialmedia.bp)
 
-    # make url_for('index') == url_for('blog.index')
+
+
     # in another app, you might define a separate main index here with
     # app.route, while giving the blog blueprint a url_prefix, but for
     # the tutorial the blog will be the main index
     app.add_url_rule("/", endpoint="index")
+    make url_for('index') == url_for('socialmedia.index')
+
+    app.add_url_rule("/socialmedia", endpoint="index")
 
     return app
