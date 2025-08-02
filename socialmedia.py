@@ -15,52 +15,52 @@ bp = Blueprint("socialmedia", __name__)
 
 @bp.route("/")
 def index():
-    """Show all the posts, most recent first."""
+    """Show all the socialmedias, most recent first."""
     db = get_db()
-    posts = db.execute(
+    socialmedias = db.execute(
         "SELECT p.id, title, body, created, author_id, username"
-        " FROM post p JOIN user u ON p.author_id = u.id"
+        " FROM socialmedia p JOIN user u ON p.author_id = u.id"
         " ORDER BY created DESC"
     ).fetchall()
-    return render_template("socialmedia/index.html", posts=posts)
+    return render_template("socialmedia/index.html", socialmedias=socialmedias)
 
 
-def get_post(id, check_author=True):
-    """Get a post and its author by id.
+def get_socialmedia(id, check_author=True):
+    """Get a socialmedia and its author by id.
 
     Checks that the id exists and optionally that the current user is
     the author.
 
-    :param id: id of post to get
+    :param id: id of socialmedia to get
     :param check_author: require the current user to be the author
-    :return: the post with author information
-    :raise 404: if a post with the given id doesn't exist
+    :return: the socialmedia with author information
+    :raise 404: if a socialmedia with the given id doesn't exist
     :raise 403: if the current user isn't the author
     """
-    post = (
+    socialmedia = (
         get_db()
         .execute(
             "SELECT p.id, title, body, created, author_id, username"
-            " FROM post p JOIN user u ON p.author_id = u.id"
+            " FROM socialmedia p JOIN user u ON p.author_id = u.id"
             " WHERE p.id = ?",
             (id,),
         )
         .fetchone()
     )
 
-    if post is None:
+    if socialmedia is None:
         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and post["author_id"] != g.user["id"]:
+    if check_author and socialmedia["author_id"] != g.user["id"]:
         abort(403)
 
-    return post
+    return socialmedia
 
 
 @bp.route("/create", methods=("GET", "POST"))
 @login_required
 def create():
-    """Create a new post for the current user."""
+    """Create a new socialmedia for the current user."""
     if request.method == "POST":
         title = request.form["title"]
         body = request.form["body"]
@@ -74,7 +74,7 @@ def create():
         else:
             db = get_db()
             db.execute(
-                "INSERT INTO post (title, body, author_id) VALUES (?, ?, ?)",
+                "INSERT INTO socialmedia (title, body, author_id) VALUES (?, ?, ?)",
                 (title, body, g.user["id"]),
             )
             db.commit()
@@ -86,8 +86,8 @@ def create():
 @bp.route("/<int:id>/update", methods=("GET", "POST"))
 @login_required
 def update(id):
-    """Update a post if the current user is the author."""
-    post = get_post(id)
+    """Update a socialmedia if the current user is the author."""
+    socialmedia = get_socialmedia(id)
 
     if request.method == "POST":
         title = request.form["title"]
@@ -102,24 +102,24 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                "UPDATE post SET title = ?, body = ? WHERE id = ?", (title, body, id)
+                "UPDATE socialmedia SET title = ?, body = ? WHERE id = ?", (title, body, id)
             )
             db.commit()
             return redirect(url_for("socialmedia.index"))
 
-    return render_template("socialmedia/update.html", post=post)
+    return render_template("socialmedia/update.html", socialmedia=socialmedia)
 
 
 @bp.route("/<int:id>/delete", methods=("POST",))
 @login_required
 def delete(id):
-    """Delete a post.
+    """Delete a socialmedia.
 
-    Ensures that the post exists and that the logged in user is the
-    author of the post.
+    Ensures that the socialmedia exists and that the logged in user is the
+    author of the socialmedia.
     """
-    get_post(id)
+    get_socialmedia(id)
     db = get_db()
-    db.execute("DELETE FROM post WHERE id = ?", (id,))
+    db.execute("DELETE FROM socialmedia WHERE id = ?", (id,))
     db.commit()
     return redirect(url_for("socialmedia.index"))

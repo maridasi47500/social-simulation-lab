@@ -49,4 +49,5 @@ Social Simulation Lab is a creative playground for experimenting with interface 
 * tu fais
 bash```
 find ./ -type f | xargs sed -i 's/user_/admin_/g'
+(cd ../ && flask --app social-simulation-lab run)
 ```
