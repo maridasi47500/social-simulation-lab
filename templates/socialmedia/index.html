@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}social media post{% endblock %}</h1>
+  <h1>{% block title %}social media socialmedia{% endblock %}</h1>
   {% if g.user %}
     <a class="action" href="{{ url_for('socialmedia.create') }}">New</a>
   {% endif %}
 {% endblock %}
 
 {% block content %}
-  {% for post in posts %}
-    <article class="post">
+  {% for socialmedia in socialmedias %}
+    <article class="socialmedia">
       <header>
         <div>
-          <h1>{{ post['title'] }}</h1>
-          <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+          <h1>{{ socialmedia['title'] }}</h1>
+          <div class="about">by {{ socialmedia['username'] }} on {{ socialmedia['created'].strftime('%Y-%m-%d') }}</div>
         </div>
-        {% if g.user['id'] == post['author_id'] %}
-          <a class="action" href="{{ url_for('socialmedia.update', id=post['id']) }}">Edit</a>
+        {% if g.user['id'] == socialmedia['author_id'] %}
+          <a class="action" href="{{ url_for('socialmedia.update', id=socialmedia['id']) }}">Edit</a>
         {% endif %}
       </header>
-      <p class="body">{{ post['body'] }}</p>
+      <p class="body">{{ socialmedia['body'] }}</p>
     </article>
     {% if not loop.last %}
       <hr>

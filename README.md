@@ -28,21 +28,25 @@ Social Simulation Lab is a creative playground for experimenting with interface 
 
     Optionally augment with AI-generated content or behavior
 
-🕹️ Activity Simulation
+### 🕹️ Activity Simulation
 
-    Select any sport or activity to simulate
+  -  Select any sport or activity to simulate
 
-    Experience it as if:
+  -  Experience it as if:
 
-        You're time-traveling through a panoramic game world
+  -      You're time-traveling through a panoramic game world
 
-        You know the rules deeply or are just exploring
+  -      You know the rules deeply or are just exploring
 
-        You're doing it for the social media aesthetic
+  -      You're doing it for the social media aesthetic
 
-    Choose whether to enhance the experience with AI or not
+  -  Choose whether to enhance the experience with AI or not
 
 
-    Add a table to distort or ammligy an experience 
+  -  Add a table to distort or ammligy an experience 
 
-    a table to distort or amplify an experience, just a supplementary table linked to the experience to add distorted feelings or amplified feelings with simple firkds
+  -  a table to distort or amplify an experience, just a supplementary table linked to the experience to add distorted feelings or amplified feelings with simple firkds
+* tu fais
+bash```
+find ./ -type f | xargs sed -i 's/user_/admin_/g'
+```
